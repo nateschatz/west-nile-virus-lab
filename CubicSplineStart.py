@@ -7,13 +7,18 @@ Created on Sat Nov 17 13:07:53 2018
 
 #%%
 ##Import the correct packages
-import matplotlib.pyplot as plt #to plot our function
+import matplotlib.pyplot as plt #to plot functions
 import numpy as np #to make arrays of data
-import pandas as pd
+import pandas as pd #used to help import data
 from scipy import interpolate as intp 
 import csv
 
 #%%Defining functions for importing
+#YOU DO NOT NEED TO CHANGE ANYTHING HERE
+#The functions get_monthly_data() and
+#get_weekly_data() return a list of data. 
+#They will be used to extract data from
+#the csv file with raw West Nile Virus data
 def read_file(filename):
 	data_read = []
 	with open(filename) as csv_file:
@@ -79,13 +84,18 @@ data = read_file("West_Nile_Virus__WNV__Mosquito_Test_Results.csv")
 
 #%%Extract the desired data
 names = ['1 - Jan.','', '3 - Mar.', '', '5 - May', '', '7 - Jul.', '', '9 - Sep.', '', '11 - Nov.', ''] #months
-xmonth = np.arange(1,13,1)#Months (12 of them)
+xmonth = np.arange(1,13,1)#Months
 xweek = np.linspace(1,13, num=52)#This generates x-points for weeks, scaled to match months
 xgraph = np.linspace(1,max(xmonth),1000)#These points are just used to graph the function
 ymonth = get_monthly_data(data)#Extract monthly data
-yweek = get_weekly_data(data)#Extract weekly data
+
+#Using ymonth as an example, get the weekly data
+#FINISH THE CODE HERE
+yweek = 'insert your code here' #Use the get_weekly_data function to extract weekly data
 csmonth = intp.CubicSpline(xmonth,ymonth)#Cubic Spline for monthly data
-csweek = intp.CubicSpline(xweek,yweek)#Cubic Spline for weekly data
+
+#FINISH THE CODE HERE
+csweek = 'insert your code here' # use the intp.Cubic Spline function for weekly data
 
 
  #%%Plot the data points and the interpolated line
@@ -93,9 +103,6 @@ plt.plot(xmonth,ymonth,'o', xweek, yweek,"x", xgraph, csmonth(xgraph), '-', xgra
 plt.legend(['Monthly Data', 'Weekly Data','Spline for Month', 'Spline for week'], loc = 'best')
 plt.xlabel("Month")
 plt.xticks(xmonth, names)
-#plt.xlim()
-#plt.ylin()
 plt.ylabel("Propotion of positive traps")
 plt.title("Predicted Prevalence of West Nile Virus by Month")
 plt.show()
-
